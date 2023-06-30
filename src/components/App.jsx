@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Section } from './Section/Section';
-import { FeedbackButtons } from './FeedbackButtons/FeedbackButtons';
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Statistics } from './Statistics/Statistics';
+import { Notification} from './Notification/Notification'
 
 export class App extends Component {
   state = {
@@ -10,7 +11,7 @@ export class App extends Component {
     bad: 0,
   };
 
-  onBtnClick = event => {
+  onLeaveFeedback = event => {
     const value = event.target.textContent;
     this.setState(prevState => {
       return { [value]: prevState[value] + 1 };
@@ -35,18 +36,21 @@ export class App extends Component {
     return (
       <>
         <Section title="Please leave feedback">
-          <FeedbackButtons
-            btnNames={Object.keys(this.state)}
-            btnClick={this.onBtnClick}
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>
         <Section title="Statistics">
+        {this.countTotalFeedback() > 0 ? (
           <Statistics
             stateValues={this.state}
             total={this.countTotalFeedback}
             positive={this.countPositiveFeedbackPercentage}
-          />
-        </Section>
+          />)
+          : <Notification message="There is no feedback"/>
+        }
+          </Section>
       </>
     );
   }

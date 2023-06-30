@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export const Statistics = ({ stateValues, total, positive }) => {
-  // console.log(stateValues)
-  // console.log(total)
-  // console.log(positive)
   const totalFeedback = total();
   const positivePercentage = positive();
   const staticArray = [];
